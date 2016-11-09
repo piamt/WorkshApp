@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		8A4F10D61DD36C3B0032EAED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F10D51DD36C3B0032EAED /* AppDelegate.swift */; };
-		8A4F10D81DD36C3B0032EAED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F10D71DD36C3B0032EAED /* ViewController.swift */; };
 		8A4F10DB1DD36C3B0032EAED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A4F10D91DD36C3B0032EAED /* Main.storyboard */; };
 		8A4F10DD1DD36C3B0032EAED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A4F10DC1DD36C3B0032EAED /* Assets.xcassets */; };
 		8A4F10E01DD36C3B0032EAED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A4F10DE1DD36C3B0032EAED /* LaunchScreen.storyboard */; };
 		8A4F10EB1DD36C3B0032EAED /* WorkshAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F10EA1DD36C3B0032EAED /* WorkshAppTests.swift */; };
 		8A4F10F61DD36C3B0032EAED /* WorkshAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F10F51DD36C3B0032EAED /* WorkshAppUITests.swift */; };
+		8A4F11041DD36D110032EAED /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F11031DD36D110032EAED /* LoginManager.swift */; };
+		8A4F11061DD371D40032EAED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F11051DD371D40032EAED /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +37,6 @@
 /* Begin PBXFileReference section */
 		8A4F10D21DD36C3B0032EAED /* WorkshApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkshApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A4F10D51DD36C3B0032EAED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8A4F10D71DD36C3B0032EAED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8A4F10DA1DD36C3B0032EAED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8A4F10DC1DD36C3B0032EAED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A4F10DF1DD36C3B0032EAED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +47,8 @@
 		8A4F10F11DD36C3B0032EAED /* WorkshAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkshAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A4F10F51DD36C3B0032EAED /* WorkshAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkshAppUITests.swift; sourceTree = "<group>"; };
 		8A4F10F71DD36C3B0032EAED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A4F11031DD36D110032EAED /* LoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		8A4F11051DD371D40032EAED /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,12 +99,13 @@
 		8A4F10D41DD36C3B0032EAED /* WorkshApp */ = {
 			isa = PBXGroup;
 			children = (
+				8A4F11051DD371D40032EAED /* ViewController.swift */,
 				8A4F10D51DD36C3B0032EAED /* AppDelegate.swift */,
-				8A4F10D71DD36C3B0032EAED /* ViewController.swift */,
 				8A4F10D91DD36C3B0032EAED /* Main.storyboard */,
 				8A4F10DC1DD36C3B0032EAED /* Assets.xcassets */,
 				8A4F10DE1DD36C3B0032EAED /* LaunchScreen.storyboard */,
 				8A4F10E11DD36C3B0032EAED /* Info.plist */,
+				8A4F11031DD36D110032EAED /* LoginManager.swift */,
 			);
 			path = WorkshApp;
 			sourceTree = "<group>";
@@ -262,8 +265,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A4F10D81DD36C3B0032EAED /* ViewController.swift in Sources */,
+				8A4F11061DD371D40032EAED /* ViewController.swift in Sources */,
 				8A4F10D61DD36C3B0032EAED /* AppDelegate.swift in Sources */,
+				8A4F11041DD36D110032EAED /* LoginManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
