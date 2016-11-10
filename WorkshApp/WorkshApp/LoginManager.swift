@@ -36,14 +36,6 @@ class LoginManager {
     struct Credentials {
         var email: String
         var password: String
-        
-        init?(email: String, password: String) {
-            guard email.isValidEmail() && password.isValidPassword() else {
-                return nil
-            }
-            self.email = email
-            self.password = password
-        }
     }
     
     weak var vc: ViewController!
@@ -75,7 +67,6 @@ class LoginManager {
                 UserDefaults.standard.set(token.authToken, forKey: "authToken")
                 UserDefaults.standard.synchronize()
                 self.vc?.loginDidSucceed()
-            
             }
         }
     }
@@ -95,11 +86,19 @@ extension String {
 
 extension LoginManager {
     fileprivate func performLogin(credentials: Credentials, completionHandler: @escaping (LoginResult) -> ()) {
+        
+        guard credentials.email.isValidEmail() else {
+            completionHandler(.failure(.invalidEmail))
+            return
+        }
+        guard credentials.password.isValidPassword() else {
+            completionHandler(.failure(.invalidPassword))
+            return
+        }
+        
         delay(2) {
-            
-            
             let results = LoginManager.validCredentials.filter({ validCredential -> Bool in
-                return validCredential!.email == credentials.email && validCredential!.password == credentials.password
+                return validCredential.email == credentials.email && validCredential.password == credentials.password
             })
             
             guard results.count > 0 else {
