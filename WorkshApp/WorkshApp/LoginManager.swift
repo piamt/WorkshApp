@@ -29,13 +29,21 @@ struct Token {
 class LoginManager {
     
     fileprivate static let validCredentials = [
-        Credentials(email: "mickeymousse@napptilus.com", password: "Napptilus"),
-        Credentials(email: "donaldduck@napptilus.com", password: "ItsATrump")
+        Credentials(email: "00_mickeymousse@napptilus.com", password: "Napptilus"),
+        Credentials(email: "00_donaldduck@napptilus.com", password: "ItsATrump")
     ]
     
     struct Credentials {
         var email: String
         var password: String
+        
+        mutating func rectifyEmail() {
+            email = "00_" + email
+        }
+        
+        func rectifiedCredentials() -> Credentials {
+            return Credentials(email: "00_" + email, password: password)
+        }
     }
     
     weak var vc: ViewController!
@@ -85,19 +93,20 @@ extension String {
 
 extension LoginManager {
     fileprivate func performLogin(credentials: Credentials, completionHandler: @escaping (LoginResult) -> ()) {
+        let cred = credentials.rectifiedCredentials()
         
-        guard credentials.email.isValidEmail() else {
+        guard cred.email.isValidEmail() else {
             completionHandler(.failure(.invalidEmail))
             return
         }
-        guard credentials.password.isValidPassword() else {
+        guard cred.password.isValidPassword() else {
             completionHandler(.failure(.invalidPassword))
             return
         }
         
         delay(2) {
             let results = LoginManager.validCredentials.filter({ validCredential -> Bool in
-                return validCredential.email == credentials.email && validCredential.password == credentials.password
+                return validCredential.email == cred.email && validCredential.password == cred.password
             })
             
             guard results.count > 0 else {
