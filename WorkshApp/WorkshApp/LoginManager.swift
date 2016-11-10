@@ -59,13 +59,23 @@ class LoginManager {
         }
         
         vc.showLoading()
-        performLogin(credentials: credentials) { isSuccessful in
+        performLogin(credentials: credentials) { loginResult in
             self.vc.hideLoading()
-            if isSuccessful {
-                self.vc.loginDidSucceed()
-            }
-            else {
-                self.vc.loginDidFail(errorMessage: "Email and password do not match")
+            switch loginResult {
+            case .failure(let error):
+                switch error {
+                case .invalidEmail:
+                    self.vc.loginDidFail(errorMessage: "Invalid email")
+                case .invalidPassword:
+                    self.vc.loginDidFail(errorMessage: "Invalid password")
+                case .wrongCredentials:
+                    self.vc.loginDidFail(errorMessage: "Wrong credentials")
+                }
+            case .success(let token):
+                UserDefaults.standard.set(token.authToken, forKey: "authToken")
+                UserDefaults.standard.synchronize()
+                self.vc?.loginDidSucceed()
+            
             }
         }
     }
@@ -84,7 +94,7 @@ extension String {
 }
 
 extension LoginManager {
-    fileprivate func performLogin(credentials: Credentials, completionHandler: @escaping (Bool) -> ()) {
+    fileprivate func performLogin(credentials: Credentials, completionHandler: @escaping (LoginResult) -> ()) {
         delay(2) {
             
             
@@ -93,11 +103,11 @@ extension LoginManager {
             })
             
             guard results.count > 0 else {
-                completionHandler(false)
+                completionHandler(.failure(.wrongCredentials))
                 return
             }
 
-            completionHandler(true)
+            completionHandler(.success(Token("7Peyw1k6hb")))
         }
     }
     
