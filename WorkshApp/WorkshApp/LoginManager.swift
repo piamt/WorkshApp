@@ -15,7 +15,16 @@ class LoginManager {
     func login (email: String, password: String) {
         let valid = email.isValidEmail() && password.isValidPassword()
         if valid {
-            vc.loginDidSucceed()
+            vc.showLoading()
+            performLogin(completionHandler: { isSuccessful in
+                self.vc.hideLoading()
+                if isSuccessful {
+                    self.vc.loginDidSucceed()
+                }
+                else {
+                    self.vc.loginDidFail(errorMessage: "Email and password do not match")
+                }
+            })
         } else {
             vc.loginDidFail(errorMessage: "Please insert correct credentials")
         }
@@ -31,5 +40,20 @@ extension String {
     
     func isValidPassword() -> Bool {
         return self.characters.count >= 6
+    }
+}
+
+extension LoginManager {
+    fileprivate func performLogin(completionHandler: @escaping (Bool) -> ()) {
+        delay(2) {
+            completionHandler(true)
+        }
+    }
+    
+    private func delay(_ seconds: Int, completionHandler: @escaping () -> ()) {
+        let deadlineTime = DispatchTime.now() + .seconds(seconds)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
+            completionHandler()
+        })
     }
 }
