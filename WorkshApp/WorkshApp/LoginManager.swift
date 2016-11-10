@@ -8,6 +8,24 @@
 
 import Foundation
 
+enum LoginResult {
+    case failure(LoginError)
+    case success(Token)
+}
+
+enum LoginError {
+    case invalidEmail
+    case invalidPassword
+    case wrongCredentials
+}
+
+struct Token {
+    let authToken: String
+    init(_ authToken: String) {
+        self.authToken = authToken
+    }
+}
+
 class LoginManager {
     
     fileprivate static let validCredentials = [
@@ -68,6 +86,7 @@ extension String {
 extension LoginManager {
     fileprivate func performLogin(credentials: Credentials, completionHandler: @escaping (Bool) -> ()) {
         delay(2) {
+            
             
             let results = LoginManager.validCredentials.filter({ validCredential -> Bool in
                 return validCredential!.email == credentials.email && validCredential!.password == credentials.password
