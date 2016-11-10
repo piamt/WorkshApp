@@ -10,10 +10,15 @@ import Foundation
 
 class LoginManager {
     
-    weak var vc: ViewController?
+    weak var vc: ViewController!
     
-    func login (user: String, password: String) -> Bool {
-            return user.isValidEmail()
+    func login (email: String, password: String) {
+        let valid = email.isValidEmail()
+        if valid {
+            vc.loginDidSucceed()
+        } else {
+            vc.loginDidFail(errorMessage: "Please insert correct credentials")
+        }
     }
 }
 
