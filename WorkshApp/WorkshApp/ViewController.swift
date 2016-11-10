@@ -55,7 +55,6 @@ class ViewController: UIViewController {
         }
         
         loginManager.login(email: email, password: pwd)
-        
     }
     
     func loginDidSucceed () {

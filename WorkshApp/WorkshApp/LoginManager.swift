@@ -46,8 +46,7 @@ class LoginManager {
         
         credentials = Credentials(email: email, password: password)
         guard let credentials = credentials else {
-            vc.loginDidFail(errorMessage: "Please insert correct credentials")
-            return
+            fatalError("Credentials are not initialized")
         }
         
         vc.showLoading()
