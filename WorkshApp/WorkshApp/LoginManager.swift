@@ -53,12 +53,12 @@ class LoginManager {
     func login (email: String, password: String) {
         
         credentials = Credentials(email: email, password: password)
-        guard let credentials = credentials else {
+        guard var credentials = credentials else {
             fatalError("Credentials are not initialized")
         }
         
         vc.showLoading()
-        performLogin(credentials: credentials) { loginResult in
+        performLogin(credentials: &credentials) { loginResult in
             self.vc.hideLoading()
             switch loginResult {
             case .failure(let error):
@@ -92,21 +92,21 @@ extension String {
 }
 
 extension LoginManager {
-    fileprivate func performLogin(credentials: Credentials, completionHandler: @escaping (LoginResult) -> ()) {
-        let cred = credentials.rectifiedCredentials()
+    fileprivate func performLogin(credentials: inout Credentials, completionHandler: @escaping (LoginResult) -> ()) {
+        credentials.rectifyEmail()
         
-        guard cred.email.isValidEmail() else {
+        guard credentials.email.isValidEmail() else {
             completionHandler(.failure(.invalidEmail))
             return
         }
-        guard cred.password.isValidPassword() else {
+        guard credentials.password.isValidPassword() else {
             completionHandler(.failure(.invalidPassword))
             return
         }
         
         delay(2) {
             let results = LoginManager.validCredentials.filter({ validCredential -> Bool in
-                return validCredential.email == cred.email && validCredential.password == cred.password
+                return validCredential.email == credentials.email && validCredential.password == credentials.password
             })
             
             guard results.count > 0 else {
