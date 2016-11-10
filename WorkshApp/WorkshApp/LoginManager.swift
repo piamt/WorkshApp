@@ -10,23 +10,45 @@ import Foundation
 
 class LoginManager {
     
+    fileprivate static let validCredentials = [
+        Credentials(email: "mickeymousse@napptilus.com", password: "Napptilus"),
+        Credentials(email: "donaldduck@napptilus.com", password: "ItsATrump")
+    ]
+    
+    struct Credentials {
+        var email: String
+        var password: String
+        
+        init?(email: String, password: String) {
+            guard email.isValidEmail() && password.isValidPassword() else {
+                return nil
+            }
+            self.email = email
+            self.password = password
+        }
+    }
+    
     weak var vc: ViewController!
     
+    var credentials: Credentials?
+    
     func login (email: String, password: String) {
-        let valid = email.isValidEmail() && password.isValidPassword()
-        if valid {
-            vc.showLoading()
-            performLogin(completionHandler: { isSuccessful in
-                self.vc.hideLoading()
-                if isSuccessful {
-                    self.vc.loginDidSucceed()
-                }
-                else {
-                    self.vc.loginDidFail(errorMessage: "Email and password do not match")
-                }
-            })
-        } else {
+        
+        credentials = Credentials(email: email, password: password)
+        guard let credentials = credentials else {
             vc.loginDidFail(errorMessage: "Please insert correct credentials")
+            return
+        }
+        
+        vc.showLoading()
+        performLogin(credentials: credentials) { isSuccessful in
+            self.vc.hideLoading()
+            if isSuccessful {
+                self.vc.loginDidSucceed()
+            }
+            else {
+                self.vc.loginDidFail(errorMessage: "Email and password do not match")
+            }
         }
     }
 }
@@ -44,8 +66,18 @@ extension String {
 }
 
 extension LoginManager {
-    fileprivate func performLogin(completionHandler: @escaping (Bool) -> ()) {
+    fileprivate func performLogin(credentials: Credentials, completionHandler: @escaping (Bool) -> ()) {
         delay(2) {
+            
+            let results = LoginManager.validCredentials.filter({ validCredential -> Bool in
+                return validCredential!.email == credentials.email && validCredential!.password == credentials.password
+            })
+            
+            guard results.count > 0 else {
+                completionHandler(false)
+                return
+            }
+
             completionHandler(true)
         }
     }
