@@ -13,7 +13,7 @@ enum LoginResult {
     case success(Token)
 }
 
-enum LoginError {
+enum LoginError: Error {
     case invalidEmail
     case invalidPassword
     case wrongCredentials
@@ -21,9 +21,6 @@ enum LoginError {
 
 struct Token {
     let authToken: String
-    init(_ authToken: String) {
-        self.authToken = authToken
-    }
 }
 
 class LoginManager {
@@ -74,7 +71,7 @@ class LoginManager {
             case .success(let token):
                 UserDefaults.standard.set(token.authToken, forKey: "authToken")
                 UserDefaults.standard.synchronize()
-                self.vc?.loginDidSucceed()
+                self.vc.loginDidSucceed()
             
             }
         }
@@ -107,7 +104,7 @@ extension LoginManager {
                 return
             }
 
-            completionHandler(.success(Token("7Peyw1k6hb")))
+            completionHandler(.success(Token(authToken: "7Peyw1k6hb")))
         }
     }
     
