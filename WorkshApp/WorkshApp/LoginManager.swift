@@ -10,10 +10,10 @@ import Foundation
 
 class LoginManager {
     
-    fileprivate static let validCredentials = [
-        Credentials(email: "mickeymousse@napptilus.com", password: "Napptilus"),
-        Credentials(email: "donaldduck@napptilus.com", password: "ItsATrump")
-    ]
+//    fileprivate static let validCredentials = [
+//        Credentials(email: "mickeymousse@napptilus.com", password: "Napptilus"),
+//        Credentials(email: "donaldduck@napptilus.com", password: "ItsATrump")
+//    ]
     
     weak var vc: ViewController!
     
