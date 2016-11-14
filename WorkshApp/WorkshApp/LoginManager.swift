@@ -69,16 +69,25 @@ extension LoginManager {
     fileprivate func performLogin(credentials: Credentials, completionHandler: @escaping (Bool) -> ()) {
         delay(2) {
             
-            let results = LoginManager.validCredentials.filter({ validCredential -> Bool in
-                return validCredential!.email == credentials.email && validCredential!.password == credentials.password
-            })
-            
-            guard results.count > 0 else {
-                completionHandler(false)
-                return
+            for element in LoginManager.validCredentials {
+                if element?.email == credentials.email && element?.password == credentials.password {
+                    completionHandler(true)
+                    return
+                }
             }
+            completionHandler(false)
 
-            completionHandler(true)
+//            Solution with filter:
+//            let results = LoginManager.validCredentials.filter({ validCredential -> Bool in
+//                return validCredential!.email == credentials.email && validCredential!.password == credentials.password
+//            })
+//            
+//            guard results.count > 0 else {
+//                completionHandler(false)
+//                return
+//            }
+//
+//            completionHandler(true)
         }
     }
     
